@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './shared/components/header/header';
-import { ToastComponent } from './shared/components/toast/toast';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { ToastComponent } from './shared/components/toast/toast.component';
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, HeaderComponent, ToastComponent],
-  templateUrl: './app.html',
-  styleUrl: './app.scss'
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss'
 })
 export class App {
   readonly title = 'todoApp';

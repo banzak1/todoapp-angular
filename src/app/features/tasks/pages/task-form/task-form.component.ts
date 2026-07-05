@@ -5,96 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { TaskService } from '../../../../core/services/task.service';
 import { AiSuggestService } from '../../../../core/services/ai-suggest.service';
 import { ToastService } from '../../../../shared/components/toast/toast.service';
-import { LoadingComponent } from '../../../../shared/components/loading/loading';
+import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'app-task-form',
   standalone: true,
   imports: [FormsModule, LoadingComponent, RouterLink],
-  template: `
-    <div class="page">
-      <div class="container" style="max-width: 640px;">
-        <div class="page-header">
-          <h1 class="page-title">{{ isEditing() ? 'Editar Tarefa' : 'Nova Tarefa' }}</h1>
-          <a routerLink="/" class="btn btn-ghost">← Voltar</a>
-        </div>
-
-        @if (loadingTask()) {
-          <app-loading message="Carregando tarefa..." />
-        } @else {
-          <form (ngSubmit)="onSubmit()" class="form">
-            <div class="form-group">
-              <label class="form-label" for="title">Título *</label>
-              <input id="title" name="title" [(ngModel)]="formData.title" #titleCtrl="ngModel"
-                     class="input" placeholder="Digite o título da tarefa" required
-                     [class.input-error]="titleCtrl.invalid && titleCtrl.touched" />
-              @if (titleCtrl.invalid && titleCtrl.touched) {
-                <span class="form-error">Título é obrigatório</span>
-              }
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="description">Descrição</label>
-              <textarea id="description" name="description" [(ngModel)]="formData.description"
-                        class="textarea" placeholder="Digite a descrição (opcional)" rows="4"></textarea>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="priority">Prioridade</label>
-                <select id="priority" name="priority" [(ngModel)]="formData.priority" class="select">
-                  <option value="LOW">Baixa</option>
-                  <option value="MEDIUM">Média</option>
-                  <option value="HIGH">Alta</option>
-                </select>
-              </div>
-
-              @if (isEditing()) {
-                <div class="form-group">
-                  <label class="form-label" for="status">Status</label>
-                  <select id="status" name="status" [(ngModel)]="formData.status" class="select">
-                    <option value="TODO">A Fazer</option>
-                    <option value="IN_PROGRESS">Em Andamento</option>
-                    <option value="DONE">Concluído</option>
-                  </select>
-                </div>
-              }
-            </div>
-
-            <div class="form-actions">
-              <button type="button" class="btn btn-secondary" (click)="onAiSuggest()"
-                      [disabled]="suggesting()" title="Sugerir com IA">
-                @if (suggesting()) {
-                  <span class="spinner spinner-sm"></span>
-                } @else {
-                  ✨
-                }
-                Sugerir com IA
-              </button>
-
-              <div class="form-actions-right">
-                <a routerLink="/" class="btn btn-ghost">Cancelar</a>
-                <button type="submit" class="btn btn-primary" [disabled]="formData.title.trim() === '' || submitting()">
-                  {{ submitting() ? 'Salvando...' : (isEditing() ? 'Salvar' : 'Criar Tarefa') }}
-                </button>
-              </div>
-            </div>
-          </form>
-        }
-      </div>
-    </div>
-  `,
-  styles: [`
-    .form { display: flex; flex-direction: column; gap: 1.25rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.375rem; }
-    .form-label { font-size: 0.875rem; font-weight: 500; color: var(--color-text-primary); }
-    .form-error { font-size: 0.8125rem; color: var(--color-error); }
-    .input-error { border-color: var(--color-error) !important; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    @media (max-width: 640px) { .form-row { grid-template-columns: 1fr; } }
-    .form-actions { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--color-border); }
-    .form-actions-right { display: flex; gap: 0.75rem; }
-  `]
+  templateUrl: './task-form.component.html',
+  styleUrl: './task-form.component.scss'
 })
 export class TaskFormPage implements OnInit {
   private readonly taskService = inject(TaskService);

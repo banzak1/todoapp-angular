@@ -1,0 +1,13 @@
+.dialog-backdrop {
+  position: fixed; inset: 0; background: rgba(15,23,42,0.4);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000; animation: fadeIn 0.15s ease;
+}
+.dialog {
+  background: var(--color-surface); border-radius: var(--radius-lg);
+  padding: var(--spacing-xl); max-width: 400px; width: 90%;
+  box-shadow: var(--shadow-lg); animation: fadeIn 0.2s ease;
+}
+.dialog-title { font-size: 1.125rem; margin-bottom: 0.5rem; }
+.dialog-message { color: var(--color-text-secondary); font-size: 0.875rem; margin-bottom: 1.5rem; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 0.75rem; }
