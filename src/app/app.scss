@@ -1,0 +1,4 @@
+.main-content {
+  min-height: calc(100dvh - var(--header-height));
+  padding-bottom: var(--spacing-2xl);
+}
