@@ -1,0 +1,19 @@
+<div class="filters">
+  <select class="filter-select" [ngModel]="status()" (ngModelChange)="onStatusChange($event)">
+    <option value="">Todos Status</option>
+    <option value="TODO">A Fazer</option>
+    <option value="IN_PROGRESS">Em Andamento</option>
+    <option value="DONE">Concluído</option>
+  </select>
+
+  <select class="filter-select" [ngModel]="priority()" (ngModelChange)="onPriorityChange($event)">
+    <option value="">Todas Prioridades</option>
+    <option value="LOW">Baixa</option>
+    <option value="MEDIUM">Média</option>
+    <option value="HIGH">Alta</option>
+  </select>
+
+  @if (hasActiveFilters()) {
+    <button class="btn btn-ghost btn-sm" (click)="clearFilters()">Limpar filtros ✕</button>
+  }
+</div>

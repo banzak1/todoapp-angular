@@ -1,0 +1,51 @@
+<div class="page">
+  <div class="container" style="max-width: 720px;">
+    <div class="page-header">
+      <h1 class="page-title">Detalhes da Tarefa</h1>
+      <a routerLink="/" class="btn btn-ghost">← Voltar</a>
+    </div>
+
+    @if (loading()) {
+      <app-loading message="Carregando tarefa..." />
+    } @else if (notFound()) {
+      <app-empty-state icon="🔍" title="Tarefa não encontrada" message="Esta tarefa pode ter sido removida ou não existe.">
+        <a routerLink="/" class="btn btn-primary mt-md">Voltar para lista</a>
+      </app-empty-state>
+    } @else if (task(); as t) {
+      <div class="detail-card">
+        <div class="detail-header">
+          <h2 class="detail-title">{{ t.title }}</h2>
+          <div class="detail-badges">
+            <span class="badge badge-{{ t.status.toLowerCase() }}">{{ statusLabel(t.status) }}</span>
+            <span class="badge badge-{{ t.priority.toLowerCase() }}">{{ t.priority }}</span>
+          </div>
+        </div>
+
+        @if (t.description) {
+          <div class="detail-section">
+            <h3>Descrição</h3>
+            <p class="detail-description">{{ t.description }}</p>
+          </div>
+        }
+
+        <div class="detail-meta">
+          <div class="meta-item">
+            <span class="meta-label">Criada em</span>
+            <span class="meta-value">{{ t.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Atualizada em</span>
+            <span class="meta-value">{{ t.updatedAt | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+        </div>
+
+        <div class="detail-actions">
+          <a [routerLink]="['/tasks', t.id, 'edit']" class="btn btn-primary">Editar</a>
+          <button class="btn btn-danger" (click)="onDelete(t)">Deletar</button>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
+<app-confirm-dialog #confirmDialog />

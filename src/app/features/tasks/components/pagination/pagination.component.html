@@ -1,0 +1,19 @@
+@if (totalPages() > 1) {
+  <div class="pagination">
+    <button class="btn btn-secondary btn-sm" [disabled]="currentPage() === 0" (click)="goToPage(currentPage() - 1)">
+      ← Anterior
+    </button>
+
+    <div class="page-numbers">
+      @for (page of visiblePages(); track page) {
+        <button class="page-btn" [class.active]="page === currentPage()" (click)="goToPage(page)">
+          {{ page + 1 }}
+        </button>
+      }
+    </div>
+
+    <button class="btn btn-secondary btn-sm" [disabled]="currentPage() >= totalPages() - 1" (click)="goToPage(currentPage() + 1)">
+      Próxima →
+    </button>
+  </div>
+}

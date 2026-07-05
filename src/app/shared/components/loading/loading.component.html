@@ -1,0 +1,6 @@
+<div class="loading-overlay">
+  <div class="spinner" [class.spinner-sm]="small()"></div>
+  @if (message()) {
+    <p class="loading-message">{{ message() }}</p>
+  }
+</div>

@@ -1,0 +1,71 @@
+<div class="page">
+  <div class="container" style="max-width: 640px;">
+    <div class="page-header">
+      <h1 class="page-title">{{ isEditing() ? 'Editar Tarefa' : 'Nova Tarefa' }}</h1>
+      <a routerLink="/" class="btn btn-ghost">← Voltar</a>
+    </div>
+
+    @if (loadingTask()) {
+      <app-loading message="Carregando tarefa..." />
+    } @else {
+      <form (ngSubmit)="onSubmit()" class="form">
+        <div class="form-group">
+          <label class="form-label" for="title">Título *</label>
+          <input id="title" name="title" [(ngModel)]="formData.title" #titleCtrl="ngModel"
+                 class="input" placeholder="Digite o título da tarefa" required
+                 [class.input-error]="titleCtrl.invalid && titleCtrl.touched" />
+          @if (titleCtrl.invalid && titleCtrl.touched) {
+            <span class="form-error">Título é obrigatório</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="description">Descrição</label>
+          <textarea id="description" name="description" [(ngModel)]="formData.description"
+                    class="textarea" placeholder="Digite a descrição (opcional)" rows="4"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="priority">Prioridade</label>
+            <select id="priority" name="priority" [(ngModel)]="formData.priority" class="select">
+              <option value="LOW">Baixa</option>
+              <option value="MEDIUM">Média</option>
+              <option value="HIGH">Alta</option>
+            </select>
+          </div>
+
+          @if (isEditing()) {
+            <div class="form-group">
+              <label class="form-label" for="status">Status</label>
+              <select id="status" name="status" [(ngModel)]="formData.status" class="select">
+                <option value="TODO">A Fazer</option>
+                <option value="IN_PROGRESS">Em Andamento</option>
+                <option value="DONE">Concluído</option>
+              </select>
+            </div>
+          }
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" (click)="onAiSuggest()"
+                  [disabled]="suggesting()" title="Sugerir com IA">
+            @if (suggesting()) {
+              <span class="spinner spinner-sm"></span>
+            } @else {
+              ✨
+            }
+            Sugerir com IA
+          </button>
+
+          <div class="form-actions-right">
+            <a routerLink="/" class="btn btn-ghost">Cancelar</a>
+            <button type="submit" class="btn btn-primary" [disabled]="formData.title.trim() === '' || submitting()">
+              {{ submitting() ? 'Salvando...' : (isEditing() ? 'Salvar' : 'Criar Tarefa') }}
+            </button>
+          </div>
+        </div>
+      </form>
+    }
+  </div>
+</div>

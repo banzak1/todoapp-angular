@@ -3,12 +3,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
 import { TaskService } from '../../../../core/services/task.service';
 import { Task, TaskListParams } from '../../../../models/task.model';
-import { TaskCardComponent } from '../../components/task-card/task-card';
-import { TaskFiltersComponent } from '../../components/task-filters/task-filters';
-import { PaginationComponent } from '../../components/pagination/pagination';
-import { LoadingComponent } from '../../../../shared/components/loading/loading';
-import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
-import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog';
+import { TaskCardComponent } from '../../components/task-card/task-card.component';
+import { TaskFiltersComponent } from '../../components/task-filters/task-filters.component';
+import { PaginationComponent } from '../../components/pagination/pagination.component';
+import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state.component';
+import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ToastService } from '../../../../shared/components/toast/toast.service';
 
 @Component({
@@ -18,57 +18,8 @@ import { ToastService } from '../../../../shared/components/toast/toast.service'
     RouterLink, TaskCardComponent, TaskFiltersComponent, PaginationComponent,
     LoadingComponent, EmptyStateComponent, ConfirmDialogComponent
   ],
-  template: `
-    <div class="page">
-      <div class="container">
-        <div class="page-header">
-          <h1 class="page-title">Tarefas</h1>
-          <a routerLink="/new" class="btn btn-primary">+ Nova Tarefa</a>
-        </div>
-
-        <app-task-filters (filterChange)="onFilterChange($event)" />
-
-        @if (loading()) {
-          <app-loading message="Carregando tarefas..." />
-        } @else if (error()) {
-          <app-empty-state icon="⚠️" title="Erro ao carregar" message="Não foi possível carregar as tarefas.">
-            <button class="btn btn-primary mt-md" (click)="loadTasks()">Tentar novamente</button>
-          </app-empty-state>
-        } @else if (tasks().length === 0) {
-          <app-empty-state icon="📋" title="Nenhuma tarefa" message="Você ainda não tem tarefas. Crie sua primeira tarefa!">
-            <a routerLink="/new" class="btn btn-primary mt-md">Criar Tarefa</a>
-          </app-empty-state>
-        } @else {
-          <div class="task-grid">
-            @for (task of tasks(); track task.id) {
-              <app-task-card
-                [task]="task"
-                (edit)="onEdit($event)"
-                (delete)="onDelete($event)"
-              />
-            }
-          </div>
-
-          <app-pagination
-            [currentPage]="currentPage()"
-            [totalPages]="totalPages()"
-            (pageChange)="onPageChange($event)"
-          />
-        }
-      </div>
-    </div>
-
-    <app-confirm-dialog #confirmDialog />
-  `,
-  styles: [`
-    .task-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1rem; margin-top: 1.5rem;
-    }
-    @media (max-width: 768px) {
-      .task-grid { grid-template-columns: 1fr; }
-    }
-  `]
+  templateUrl: './task-list.component.html',
+  styleUrl: './task-list.component.scss'
 })
 export class TaskListPage implements OnInit {
   private readonly taskService = inject(TaskService);

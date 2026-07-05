@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://todoapp-backend-abc123-uc.a.run.app/api/v1'
+  apiUrl: 'https://todoapp-5h7f6ghm5a-ue.a.run.app/api/v1'
 };

@@ -1,0 +1,40 @@
+<div class="page">
+  <div class="container">
+    <div class="page-header">
+      <h1 class="page-title">Tarefas</h1>
+      <a routerLink="/" class="btn btn-primary">+ Nova Tarefa</a>
+    </div>
+
+    <app-task-filters (filterChange)="onFilterChange($event)" />
+
+    @if (loading()) {
+      <app-loading message="Carregando tarefas..." />
+    } @else if (error()) {
+      <app-empty-state icon="⚠️" title="Erro ao carregar" message="Não foi possível carregar as tarefas.">
+        <button class="btn btn-primary mt-md" (click)="loadTasks()">Tentar novamente</button>
+      </app-empty-state>
+    } @else if (tasks().length === 0) {
+      <app-empty-state icon="📋" title="Nenhuma tarefa" message="Você ainda não tem tarefas. Crie sua primeira tarefa!">
+        <a routerLink="/" class="btn btn-primary mt-md">Criar Tarefa</a>
+      </app-empty-state>
+    } @else {
+      <div class="task-grid">
+        @for (task of tasks(); track task.id) {
+          <app-task-card
+            [task]="task"
+            (edit)="onEdit($event)"
+            (delete)="onDelete($event)"
+          />
+        }
+      </div>
+
+      <app-pagination
+        [currentPage]="currentPage()"
+        [totalPages]="totalPages()"
+        (pageChange)="onPageChange($event)"
+      />
+    }
+  </div>
+</div>
+
+<app-confirm-dialog #confirmDialog />

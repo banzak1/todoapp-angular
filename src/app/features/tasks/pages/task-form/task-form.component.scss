@@ -1,0 +1,9 @@
+.form { display: flex; flex-direction: column; gap: 1.25rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.375rem; }
+.form-label { font-size: 0.875rem; font-weight: 500; color: var(--color-text-primary); }
+.form-error { font-size: 0.8125rem; color: var(--color-error); }
+.input-error { border-color: var(--color-error) !important; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 640px) { .form-row { grid-template-columns: 1fr; } }
+.form-actions { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--color-border); }
+.form-actions-right { display: flex; gap: 0.75rem; }
