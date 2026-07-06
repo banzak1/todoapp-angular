@@ -40,7 +40,7 @@
         </div>
 
         <div class="detail-actions">
-          <a [routerLink]="['/tasks', t.id, 'edit']" class="btn btn-primary">Editar</a>
+          <a [routerLink]="['/', t.id, 'edit']" class="btn btn-primary">Editar</a>
           <button class="btn btn-danger" (click)="onDelete(t)">Deletar</button>
         </div>
       </div>

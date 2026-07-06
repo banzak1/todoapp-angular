@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, DestroyRef } from '@angular/core';
+import { Component, inject, OnInit, signal, DestroyRef, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
 import { TaskService } from '../../../../core/services/task.service';
@@ -26,7 +26,7 @@ export class TaskListPage implements OnInit {
   private readonly router = inject(Router);
   private readonly toast = inject(ToastService);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly confirmDialog = inject(ConfirmDialogComponent);
+  private readonly confirmDialog = viewChild.required<ConfirmDialogComponent>('confirmDialog');
 
   readonly tasks = signal<Task[]>([]);
   readonly loading = signal(true);
@@ -79,11 +79,11 @@ export class TaskListPage implements OnInit {
   }
 
   onEdit(task: Task): void {
-    this.router.navigate(['/tasks', task.id, 'edit']);
+    this.router.navigate(['/', task.id, 'edit']);
   }
 
   async onDelete(task: Task): Promise<void> {
-    const confirmed = await this.confirmDialog.show({
+    const confirmed = await this.confirmDialog().show({
       title: 'Deletar tarefa',
       message: `Tem certeza que deseja deletar "${task.title}"?`,
       confirmText: 'Deletar'

@@ -8,7 +8,7 @@
         {{ task().priority }}
       </span>
     </div>
-    <a [routerLink]="['/tasks', task().id]" class="task-title">{{ task().title }}</a>
+    <a [routerLink]="['/', task().id]" class="task-title">{{ task().title }}</a>
     @if (task().description) {
       <p class="task-description">{{ task().description | slice:0:120 }}{{ task().description.length > 120 ? '...' : '' }}</p>
     }
