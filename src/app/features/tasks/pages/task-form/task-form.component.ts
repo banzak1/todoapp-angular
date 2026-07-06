@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, DestroyRef, viewChild } from '@angular/core';
+import { Component, inject, OnInit, signal, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -79,7 +79,7 @@ export class TaskFormPage implements OnInit {
       }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
         next: () => {
           this.toast.success('Tarefa atualizada!');
-          this.router.navigate(['/tasks', this.taskId]);
+          this.router.navigate(['/', this.taskId]);
         },
         error: () => this.submitting.set(false)
       });
@@ -91,7 +91,7 @@ export class TaskFormPage implements OnInit {
       }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
         next: (task) => {
           this.toast.success('Tarefa criada!');
-          this.router.navigate(['/tasks', task.id]);
+          this.router.navigate(['/', task.id]);
         },
         error: () => this.submitting.set(false)
       });
