@@ -1,5 +1,4 @@
-import { Component, input, computed, inject } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-empty-state',
@@ -8,15 +7,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   styleUrl: './empty-state.component.scss'
 })
 export class EmptyStateComponent {
-  private readonly sanitizer = inject(DomSanitizer);
-
-  readonly icon = input('—');
-  readonly iconSvg = input<string>();
+  readonly icon = input('📋');
   readonly title = input('Nenhum item encontrado');
   readonly message = input<string>();
-
-  readonly safeSvg = computed<SafeHtml | null>(() => {
-    const svg = this.iconSvg();
-    return svg ? this.sanitizer.bypassSecurityTrustHtml(svg) : null;
-  });
 }
