@@ -1,0 +1,40 @@
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant/20">
+  <div class="flex justify-between items-center mb-4">
+    <h3 class="font-headline-md text-[16px] text-on-background font-semibold capitalize">{{ monthName }} {{ year }}</h3>
+    <div class="flex gap-2">
+      <button class="text-on-surface-variant hover:text-primary transition-colors">
+        <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+      </button>
+      <button class="text-on-surface-variant hover:text-primary transition-colors">
+        <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-7 gap-1 text-center">
+    <!-- Weekday Headers -->
+    @for (day of weekdays; track $index) {
+      <div class="font-label-sm text-[12px] font-medium text-on-surface-variant pb-2">{{ day }}</div>
+    }
+    
+    <!-- Calendar Days -->
+    @for (item of days(); track $index) {
+      @if (item.day) {
+        <div class="relative flex items-center justify-center h-8 font-body-sm text-[14px] rounded-full cursor-pointer transition-colors"
+             [ngClass]="{
+               'bg-primary text-on-primary font-semibold shadow-md': item.isToday,
+               'text-on-background hover:bg-surface-container': !item.isToday
+             }">
+          {{ item.day }}
+          @if (item.hasTask && !item.isToday) {
+            <span class="absolute bottom-1 w-1 h-1 bg-error rounded-full"></span>
+          } @else if (item.hasTask && item.isToday) {
+            <span class="absolute bottom-1 w-1 h-1 bg-on-primary rounded-full"></span>
+          }
+        </div>
+      } @else {
+        <div class="h-8"></div>
+      }
+    }
+  </div>
+</div>

@@ -1,12 +1,25 @@
-<header class="header">
-  <div class="container header-content">
-    <a routerLink="/" class="logo">
-      <span class="logo-icon">✓</span>
-      <span class="logo-text">todoApp</span>
+<header class="w-full sticky top-0 z-40 bg-surface-container-lowest flex justify-between items-center px-4 py-2 md:px-12 border-b border-outline-variant/30">
+  <div class="flex items-center gap-4">
+    <a routerLink="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+      <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+        <span class="material-symbols-outlined text-[20px]">check_circle</span>
+      </div>
+      <span class="font-headline-md text-[20px] font-bold text-on-background">todoApp</span>
     </a>
-    <nav class="nav">
-      <a routerLink="/" class="nav-link">Tarefas</a>
-      <a routerLink="/new" class="btn btn-primary btn-sm">+ Nova Tarefa</a>
-    </nav>
+  </div>
+  <div class="hidden md:block flex-1 max-w-2xl px-6 mx-auto">
+    <div class="relative">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+      <input class="w-full h-[40px] pl-10 pr-4 rounded-full border border-outline-variant bg-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all shadow-sm font-body-md text-body-md" placeholder="Search tasks..." type="text"/>
+    </div>
+  </div>
+  <div class="flex items-center gap-2 md:gap-4">
+    <button class="md:hidden text-on-surface-variant hover:bg-surface-container p-2 rounded-full transition-colors duration-200">
+      <span class="material-symbols-outlined">search</span>
+    </button>
+    <button class="text-on-surface-variant hover:bg-surface-container p-2 rounded-full transition-colors duration-200 relative">
+      <span class="material-symbols-outlined">notifications</span>
+      <span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+    </button>
   </div>
 </header>

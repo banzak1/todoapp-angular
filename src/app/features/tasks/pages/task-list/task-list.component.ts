@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, DestroyRef, viewChild } from '@angular/core';
+import { Component, inject, OnInit, signal, computed, DestroyRef, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
 import { TaskService } from '../../../../core/services/task.service';
@@ -10,13 +10,14 @@ import { LoadingComponent } from '../../../../shared/components/loading/loading.
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state.component';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ToastService } from '../../../../shared/components/toast/toast.service';
+import { CalendarWidget } from '../../components/calendar-widget/calendar-widget';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
   imports: [
     RouterLink, TaskCardComponent, TaskFiltersComponent, PaginationComponent,
-    LoadingComponent, EmptyStateComponent, ConfirmDialogComponent
+    LoadingComponent, EmptyStateComponent, ConfirmDialogComponent, CalendarWidget
   ],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss'
@@ -29,6 +30,10 @@ export class TaskListPage implements OnInit {
   private readonly confirmDialog = viewChild.required<ConfirmDialogComponent>('confirmDialog');
 
   readonly tasks = signal<Task[]>([]);
+  readonly highPriorityTasks = computed(() => this.tasks().filter(t => t.priority === 'HIGH'));
+  readonly mediumPriorityTasks = computed(() => this.tasks().filter(t => t.priority === 'MEDIUM'));
+  readonly lowPriorityTasks = computed(() => this.tasks().filter(t => t.priority === 'LOW'));
+
   readonly loading = signal(true);
   readonly error = signal(false);
   readonly currentPage = signal(0);
