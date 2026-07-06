@@ -1,4 +1,8 @@
 /* todoApp Angular - Design System Moderno */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
@@ -83,13 +87,10 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
+  @apply bg-background text-on-background min-h-screen flex flex-col;
   font-family: var(--font-sans);
-  background-color: var(--color-background);
-  color: var(--color-text-primary);
-  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100dvh;
 }
 
 h1, h2, h3, h4, h5, h6 {
