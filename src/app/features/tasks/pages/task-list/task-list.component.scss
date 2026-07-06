@@ -1,7 +1,26 @@
-.task-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1rem; margin-top: 1.5rem;
+.task-list-page {
+  padding: var(--spacing-xl) 0;
 }
+
+.task-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 48px;
+}
+
+.task-list-header h1 {
+  margin: 0;
+}
+
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
 @media (max-width: 768px) {
-  .task-grid { grid-template-columns: 1fr; }
+  .task-grid {
+    grid-template-columns: 1fr;
+  }
 }

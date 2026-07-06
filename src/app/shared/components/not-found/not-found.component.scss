@@ -1,4 +1,32 @@
-.not-found { text-align: center; padding: 4rem 1rem; }
-.not-found-code { font-size: 6rem; font-weight: 700; color: var(--color-primary); line-height: 1; margin-bottom: 1rem; }
-.not-found-title { font-size: 1.5rem; margin-bottom: 0.75rem; }
-.not-found-message { color: var(--color-text-secondary); margin-bottom: 2rem; }
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 1rem;
+  min-height: 60vh;
+}
+
+.not-found-code {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 6rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.not-found-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.not-found-message {
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem;
+  margin-bottom: 2rem;
+  max-width: 400px;
+  line-height: 1.6;
+}
