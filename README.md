@@ -46,13 +46,16 @@ ng test
 
 ## Running end-to-end tests
 
-For end-to-end (e2e) testing, run:
+- **Framework:** Angular 17+ (Standalone Components)
+- **Estilização:** Tailwind CSS v3 + Variáveis CSS (Baseado no Stitch Design)
+- **Gerenciamento de Estado:** Signals
+- **Testes:** Vitest (a ser configurado)
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Funcionalidades Atuais
+- [x] Mock do TaskService para testes sem backend
+- [x] Dashboard (Lista de Tarefas) com UI fiel ao Stitch Design
+- [x] Calendário Dinâmico reativo às tarefas
+- [x] Estilização global com TailwindCSS e variáveis customizadas
 
 ## Additional Resources
 
