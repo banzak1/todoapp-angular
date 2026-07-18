@@ -1,4 +1,4 @@
-<div class="group flex flex-col md:flex-row md:items-center gap-4 p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/20 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden">
+<div class="group flex flex-col md:flex-row md:items-center gap-4 p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/20 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden" [ngClass]="{ 'opacity-60 pointer-events-none': disabled() }">
   <div class="absolute left-0 top-0 bottom-0 w-1" [ngClass]="{
     'bg-error': task().priority === 'HIGH',
     'bg-warning': task().priority === 'MEDIUM',
@@ -6,7 +6,7 @@
   }"></div>
   <div class="flex items-start md:items-center gap-4 w-full">
     <div class="mt-1 md:mt-0">
-      <input type="checkbox" class="w-5 h-5 rounded-full border-outline text-primary focus:ring-primary cursor-pointer" [checked]="task().status === 'DONE'" />
+      <input type="checkbox" class="w-5 h-5 rounded-full border-outline text-primary focus:ring-primary cursor-pointer" [checked]="task().status === 'DONE'" [disabled]="disabled()" (change)="onCheckboxChange($event)" />
     </div>
     <div class="flex-1 min-w-0">
       <a [routerLink]="['/', task().id]" class="font-body-md text-[14px] text-on-background font-medium truncate hover:underline block">{{ task().title }}</a>

@@ -31,7 +31,7 @@
             <h2 class="font-headline-md text-[18px] text-on-background mb-4 font-semibold">High Priority</h2>
             <div class="flex flex-col gap-3">
               @for (task of highPriorityTasks(); track task.id) {
-                <app-task-card [task]="task" (edit)="onEdit($event)" (delete)="onDelete($event)" />
+                <app-task-card [task]="task" [disabled]="updatingTasks().has(task.id)" (statusChange)="onStatusChange($event)" (edit)="onEdit($event)" (delete)="onDelete($event)" />
               }
             </div>
           </section>
@@ -42,7 +42,7 @@
             <h2 class="font-headline-md text-[18px] text-on-background mb-4 font-semibold">Medium Priority</h2>
             <div class="flex flex-col gap-3">
               @for (task of mediumPriorityTasks(); track task.id) {
-                <app-task-card [task]="task" (edit)="onEdit($event)" (delete)="onDelete($event)" />
+                <app-task-card [task]="task" [disabled]="updatingTasks().has(task.id)" (statusChange)="onStatusChange($event)" (edit)="onEdit($event)" (delete)="onDelete($event)" />
               }
             </div>
           </section>
@@ -53,7 +53,7 @@
             <h2 class="font-headline-md text-[18px] text-on-background mb-4 font-semibold">Low Priority</h2>
             <div class="flex flex-col gap-3">
               @for (task of lowPriorityTasks(); track task.id) {
-                <app-task-card [task]="task" (edit)="onEdit($event)" (delete)="onDelete($event)" />
+                <app-task-card [task]="task" [disabled]="updatingTasks().has(task.id)" (statusChange)="onStatusChange($event)" (edit)="onEdit($event)" (delete)="onDelete($event)" />
               }
             </div>
           </section>
@@ -66,11 +66,10 @@
     }
   </div>
 
-  <!-- Right Side: Widgets (Calendar + Stats) -->
+  <!-- Right Side: Widgets (Calendar + Stats) (Temporarily Hidden)
   <aside class="w-full xl:w-72 flex flex-col gap-6 flex-shrink-0">
     <app-calendar-widget [tasks]="tasks()" />
     
-    <!-- Quick Stats -->
     <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant/20 hidden xl:block">
       <h3 class="font-headline-md text-[16px] text-on-background mb-4 font-semibold">Quick Stats</h3>
       <div class="flex items-center gap-4">
@@ -84,6 +83,7 @@
       </div>
     </div>
   </aside>
+  -->
 </div>
 
 <app-confirm-dialog #confirmDialog />

@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal, computed, DestroyRef, viewChild } fr
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
 import { TaskService } from '../../../../core/services/task.service';
-import { Task, TaskListParams } from '../../../../models/task.model';
+import { Task, TaskListParams, TaskStatus } from '../../../../models/task.model';
 import { TaskCardComponent } from '../../components/task-card/task-card.component';
 import { TaskFiltersComponent } from '../../components/task-filters/task-filters.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
@@ -10,14 +10,13 @@ import { LoadingComponent } from '../../../../shared/components/loading/loading.
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state.component';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ToastService } from '../../../../shared/components/toast/toast.service';
-import { CalendarWidget } from '../../components/calendar-widget/calendar-widget';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
   imports: [
     RouterLink, TaskCardComponent, TaskFiltersComponent, PaginationComponent,
-    LoadingComponent, EmptyStateComponent, ConfirmDialogComponent, CalendarWidget
+    LoadingComponent, EmptyStateComponent, ConfirmDialogComponent
   ],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss'
@@ -30,6 +29,7 @@ export class TaskListPage implements OnInit {
   private readonly confirmDialog = viewChild.required<ConfirmDialogComponent>('confirmDialog');
 
   readonly tasks = signal<Task[]>([]);
+  readonly updatingTasks = signal<Set<number>>(new Set());
   readonly highPriorityTasks = computed(() => this.tasks().filter(t => t.priority === 'HIGH'));
   readonly mediumPriorityTasks = computed(() => this.tasks().filter(t => t.priority === 'MEDIUM'));
   readonly lowPriorityTasks = computed(() => this.tasks().filter(t => t.priority === 'LOW'));
@@ -85,6 +85,50 @@ export class TaskListPage implements OnInit {
 
   onEdit(task: Task): void {
     this.router.navigate(['/', task.id, 'edit']);
+  }
+
+  onStatusChange(event: { task: Task; status: TaskStatus }): void {
+    const { task, status } = event;
+    const previousStatus = task.status;
+
+    if (this.updatingTasks().has(task.id)) return;
+
+    this.updatingTasks.update(set => {
+      const newSet = new Set(set);
+      newSet.add(task.id);
+      return newSet;
+    });
+
+    this.tasks.update(tasks =>
+      tasks.map(t => t.id === task.id ? { ...t, status } : t)
+    );
+
+    this.taskService.updateTask(task.id, { status }).pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe({
+      next: (updatedTask) => {
+        this.tasks.update(tasks =>
+          tasks.map(t => t.id === task.id ? updatedTask : t)
+        );
+        this.updatingTasks.update(set => {
+          const newSet = new Set(set);
+          newSet.delete(task.id);
+          return newSet;
+        });
+        this.toast.success('Status da tarefa atualizado com sucesso!');
+      },
+      error: () => {
+        this.tasks.update(tasks =>
+          tasks.map(t => t.id === task.id ? { ...t, status: previousStatus } : t)
+        );
+        this.updatingTasks.update(set => {
+          const newSet = new Set(set);
+          newSet.delete(task.id);
+          return newSet;
+        });
+        this.toast.error('Erro ao atualizar o status da tarefa.');
+      }
+    });
   }
 
   async onDelete(task: Task): Promise<void> {
