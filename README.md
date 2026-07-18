@@ -13,9 +13,9 @@ O projeto de interface evolui adicionando novas camadas e refinações:
 1. **Fase 1 — Fundação & UI Base** (✅ Concluída): Estruturação inicial do projeto com Angular 17+ (Standalone Components), roteamento básico e implementação de Mocks de serviços para trabalho offline (sem necessidade imediata do Back-End).
 2. **Fase 2 — Design System & Estilização** (✅ Concluída): Integração do **Stitch Design System**, estilização global com TailwindCSS e mapeamento de variáveis CSS. Refatoração da estrutura de componentes separando `.ts`, `.html` e `.scss`. Criação da UI principal: Dashboard e Calendário Dinâmico reativos.
 3. **Fase 3 — Deploy & Configuração de Ambientes** (✅ Concluída): Configuração de roteamento tipo SPA e preparação dos diretórios de build (arquivos `vercel.json` e fallback) para deploy direto no Vercel.
-4. **Fase 4 — Integração Real com API** (⚠️ Próximo Passo): Substituição dos dados mockados (em memória) pela comunicação HTTP real consumindo a API REST de tarefas e IA do projeto Back-End.
+4. **Fase 4 — Integração Real com API** (✅ Concluída): Substituição dos dados mockados (em memória) pela comunicação HTTP real consumindo a API REST de tarefas e IA do projeto Back-End. Implementação da atualização otimista local com reversão em caso de erro da API.
 5. **Fase 5 — Gerenciamento de Estado Avançado**: Adoção de estado reativo complexo utilizando Signals (Angular 17+) ou padrão Redux e cacheamento otimista.
-6. **Fase 6 — Testes E2E & Cobertura Automática**: Implementação completa da suíte de testes unitários com Vitest e end-to-end (E2E) com Cypress ou Playwright.
+6. **Fase 6 — Testes Unitários Automatizados** (✅ Concluída): Implementação completa da suíte de testes unitários com Vitest cobrindo os componentes e páginas modificados (ex: `TaskCardComponent` e `TaskListPage`).
 
 ---
 
@@ -26,7 +26,7 @@ O projeto de interface evolui adicionando novas camadas e refinações:
 *   **Stitch Design System** (Tokens de design, cores neutras, tipografia e espaçamento)
 *   **TypeScript** (Tipagem estática, segurança em tempo de desenvolvimento)
 *   **Vercel** (Hospedagem, CI/CD e configuração de rotas SPA)
-*   **Vitest** (Test runner otimizado e rápido - a configurar na evolução do projeto)
+*   **Vitest** (Test runner otimizado e integrado para testes unitários rápidos e confiáveis)
 
 ---
 
@@ -98,11 +98,17 @@ Os arquivos otimizados e prontos para deploy (com suporte ao padrão SPA) serão
 
 ## 🧪 Rodando os Testes Automatizados
 
-A base está preparada para rodar testes utilizando o **Vitest** (em substituição ou ao lado do Karma/Jasmine clássico). 
+A base está preparada para rodar testes utilizando o **Vitest** integrado com o Angular.
 
-Para executar os testes configurados:
+Para executar os testes configurados em modo watch:
 ```bash
-ng test
+npm run test
+# ou: ng test
+```
+
+Para executar os testes apenas uma vez e sair:
+```bash
+npx ng test --no-watch
 ```
 
 ---
